@@ -1,4 +1,10 @@
-from collections import OrderedDict
+import sys
+
+pyversion= float(sys.version[:3])
+if pyversion >= 2.7:
+    from collections import OrderedDict
+else:
+    from ordereddict import OrderedDict #requires package installation
 
 def generate_autocomplete_dictionary_keys(dummy_key_class):
     for att_name, att_val in vars(dummy_key_class).iteritems():
