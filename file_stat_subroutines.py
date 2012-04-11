@@ -18,7 +18,12 @@ def get_folder_size_kb(folderpath):
     return int(result[0].split()[0])
 
 def get_path_owner(path, uid_user_dict):
-    return uid_user_dict[os.stat(path).st_uid]
+    try:
+        return uid_user_dict[os.stat(path).st_uid]
+    except OSError:
+        return "NotFound"
+        
+    
 
 def ensure_dir(filename):
     d = os.path.dirname(filename)
