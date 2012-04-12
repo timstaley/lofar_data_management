@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os,sys
 import re
 import csv
@@ -43,7 +44,7 @@ def get_self_dupes(user, dupes_list):
             sdupe.n_copies = user_count
             sdupe.owners=[]
             sdupe.locations=[]
-            for u, l in d.owners, d.locations:
+            for u, l in zip(d.owners, d.locations):
                 if u ==user:
                     sdupe.owners.append(u)
                     sdupe.locations.append(l)
@@ -72,9 +73,14 @@ def write_dupes_csv(dupe_list, outfile_path):
                         )
 
 def main():
-    uid_user_dict = get_uid_user_dict()
+    if (len(sys.argv) != 2):
+        print "Usage: parse_fslint /path/to/findup_output.txt"
+        return 1
+
+    findup_output_path = sys.argv[1]    
     
-    dupes_file = open("test_data/dupes.txt")
+    uid_user_dict = get_uid_user_dict()
+    dupes_file = open(findup_output_path,'r')
     
     dupes = []
     
@@ -102,8 +108,22 @@ def main():
             users.add(u)
     
     write_dupes_csv(dupes, 'all_dupes.csv')
-        
-    
+    total_wastage=0
+    for d in dupes:
+        total_wastage +=d.wastage()
+    print "Total wastage:", ( "%15.2f" % total_wastage)
+
+    self_wastage=0
+    for u in users:
+        user_self_dupes = get_self_dupes(u, dupes)
+        write_dupes_csv(user_self_dupes, "user_self_dupes/"+u+".csv")
+        user_self_wastage=0
+        for d in user_self_dupes:
+            user_self_wastage +=d.wastage()
+        print ("Selfwastage for "+u+":").ljust(40),( "%15.2f" %  user_self_wastage )
+        self_wastage += user_self_wastage
+
+    print "Total selfwastage", ( "%15.2f" % self_wastage)
     
 
 
