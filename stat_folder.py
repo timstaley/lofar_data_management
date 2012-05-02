@@ -7,6 +7,7 @@ import csv
 
 
 def main():
+    """ A simple program to test the folder status checking routines """
     if (len(sys.argv) != 4):
         print "Usage: stat_folder /path/to/folder area_name outfile.csv"
         return 1

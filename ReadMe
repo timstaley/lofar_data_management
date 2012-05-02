@@ -1,0 +1,27 @@
+A few quick scripts to ease removal of duplicate files from a multiple user system.
+
+Intended for use with 'findup' from the fslint package:
+http://www.pixelbeat.org/fslint/
+http://en.flossmanuals.net/FSlint/
+
+'parse_findup_output.py' is a script to organize fslint/findup output and format it into a csv.
+The files are scanned to identify who they belong to, 
+and then csv files are output to identify duplicates for which both/all copies belong to a single user.
+This identifies the easy cases where a single user can decide which copy to retain.
+
+In the case of LOFAR data, the script also scrapes some minimal tags (subband, obs. id) from the folder name.
+
+
+Usage:
+Run findup, e.g. using:
+./findup_script.sh /some_big_folder  > big_folder_dupes.txt
+or 
+./findup_script.sh /some_folder /some_other_folder > multiple_folder_dupes.txt
+
+(You can tweak the search criteria as per the findup --help reference).
+
+Then run:
+./parse_findup_output.py folder_dupes.txt
+
+Which will output the summary file 'all_dupes.csv', and also a folder 'user_self_dupes' containing csv's pertaining to single user duplicates. 
+

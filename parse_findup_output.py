@@ -73,6 +73,13 @@ def write_dupes_csv(dupe_list, outfile_path):
                         )
 
 def main():
+    """ A script to organize fslint/findup output and format it into a csv.
+        The files are scanned to identify who they belong to, 
+        and then csv files are output identify duplicates for which both/all copies belong to a single user.
+        This identifies the easy cases where a single user can decide which copy to retain.
+        
+        In the case of LOFAR data, the script also scrapes some minimal tags (subband, obs. id) from the folder name.
+    """ 
     if (len(sys.argv) != 2):
         print "Usage: parse_fslint /path/to/findup_output.txt"
         return 1

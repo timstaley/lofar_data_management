@@ -12,6 +12,9 @@ def generate_autocomplete_dictionary_keys(dummy_key_class):
             setattr(dummy_key_class, att_name, "".join([dummy_key_class.__name__,"_",att_name]))
 
 class FKey():
+    """Namespace enclosed dictionary keys, used for storing folder information.
+        NB. These have the pleasant property that pydev autocompletion will fill them in for you.
+    """
     area=None
     name=None
     size=None
@@ -26,7 +29,7 @@ class FKey():
     
 generate_autocomplete_dictionary_keys(FKey)
 
-
+#Column headers for output to a csv.
 hdrs=OrderedDict()
 hdrs[FKey.area] = "RAID array (A/B/C...)"
 hdrs[FKey.name] = "Folder name"
